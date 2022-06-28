@@ -17,7 +17,8 @@ countryDF.dropna().reset_index(drop=True).loc[:,['id','name']]
 #countryIDs= ';'.join(countryDF['id']).lower() #country id formatted for the API
 indicators = pd.read_excel('Data_Extract_From_World_Development_Indicators_Metadata.xlsx', 
                             sheet_name='Series - Metadata')[['Required','Code','Indicator Name']]
-indicators.dropna().drop(columns=['Required'])
+indicators.dropna(inplace=True)
+indicators.drop(columns=['Required'])
 indicatorList = indicators['Code'].tolist()
 print('indicators are', indicatorList)
 
