@@ -33,15 +33,18 @@ data = pd.DataFrame()
 finalData = pd.DataFrame()
 #for each Indicator, get data from the API
 for indicator in indicatorList:
+    #setting the parameter dictionary for the current indicator
     parameters['id']=indicator
+    print('fetching data for', indicator)
     getTotalPages = req.get("https://api.worldbank.org/v2/country/{country}/indicator/{id}?date={startDate}:{endDate}&format=json".format_map(parameters))
-    print(getTotalPages.status_code)
+    #print(getTotalPages.status_code)
+    #get the total number of pages for the current API call  
     totalPages=getTotalPages.json()[0]['pages']
 
     for page in range(1,totalPages):
         parameters['pages'] = page
         getDataForIndicator = req.get("https://api.worldbank.org/v2/country/{country}/indicator/{id}?date={startDate}:{endDate}&format=json&page={pages}".format_map(parameters))
-        print(getDataForIndicator.status_code)
+        #print(getDataForIndicator.status_code)
         getDataForIndicator=getDataForIndicator.json()[1]
         temp_data = pd.DataFrame(getDataForIndicator)[['country', 'countryiso3code', 'date', 'value', 'unit',
         'obs_status', 'decimal']]
@@ -68,4 +71,8 @@ for indicator in indicatorList:
 print(finalData.head(50))
 print(finalData.columns, finalData.shape, finalData.describe())
 
-finalData.to_csv('IndicatorsData.csv')
+try:
+    finalData.to_csv('IndicatorsData.csv')
+    print('data written succesfully')
+except:
+    print('data write unsuccesful')
