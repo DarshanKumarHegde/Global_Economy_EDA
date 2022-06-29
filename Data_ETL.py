@@ -68,7 +68,7 @@ try:
             data.drop(columns=['country'], inplace=True)
             data.rename(columns={'id':'country code','value':'country'}, inplace=True)
         except:
-            indicatorList=indicatorList[indicator_idx+1:]
+            indicatorList=indicatorList[indicator_idx:]
             temp_data = pd.DataFrame()
             data = pd.DataFrame()
             print('pipe broke while at page',page)
