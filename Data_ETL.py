@@ -33,47 +33,67 @@ parameters={'country':'all',
 data = pd.DataFrame()
 finalData = pd.DataFrame()
 #for each Indicator, get data from the API
-for indicator in indicatorList:
-    #setting the parameter dictionary for the current indicator
-    parameters['id']=indicator
-    print('fetching data for', indicator)
-    getTotalPages = req.get("https://api.worldbank.org/v2/country/{country}/indicator/{id}?date={startDate}:{endDate}&format=json".format_map(parameters))
-    #print(getTotalPages.status_code)
-    #get the total number of pages for the current API call  
-    totalPages=getTotalPages.json()[0]['pages']
-
-    for page in range(1,totalPages):
-        parameters['pages'] = page
-        getDataForIndicator = req.get("https://api.worldbank.org/v2/country/{country}/indicator/{id}?date={startDate}:{endDate}&format=json&page={pages}".format_map(parameters))
-        #print(getDataForIndicator.status_code)
-        getDataForIndicator=getDataForIndicator.json()[1]
-        temp_data = pd.DataFrame(getDataForIndicator)[['country', 'countryiso3code', 'date', 'value', 'unit',
-        'obs_status', 'decimal']]
-        data=pd.concat([data, temp_data])
-        print(page,' pages done')
-
-        #indName = indicators.loc[indicator,'Indicator Name']
-    data.rename(columns={'value':indicator},inplace=True)
-    data = pd.concat([data, data["country"].apply(pd.Series)], axis=1)
-    data.drop(columns=['country'], inplace=True)
-    data.rename(columns={'id':'country code','value':'country'}, inplace=True)
-    
-    if finalData.empty:
-        finalData = data
-        finalData.drop(columns=['unit','obs_status','decimal'],inplace=True)
-        print('Dataframe was empty')
-        data=pd.DataFrame()
-    else:
-        finalData = pd.merge(finalData,
-                        data[['countryiso3code','country code','country', 'date',indicator]],
-                        how='left', 
-                        on=['countryiso3code','country code','country','date',])
-        data=pd.DataFrame()
-print(finalData.head(50))
-print(finalData.columns, finalData.shape, finalData.describe())
-
 try:
-    finalData.to_csv('IndicatorsData.csv')
-    print('data written succesfully')
+    for indicator_idx, indicator in enumerate(indicatorList):
+        #setting the parameter dictionary for the current indicator
+        parameters['id']=indicator
+        print('fetching data for', indicator)
+        getTotalPages = req.get("https://api.worldbank.org/v2/country/{country}/indicator/{id}?date={startDate}:{endDate}&format=json".format_map(parameters))
+        #print(getTotalPages.status_code)
+        #get the total number of pages for the current API call  
+        totalPages=getTotalPages.json()[0]['pages']
+        print(totalPages)
+
+        for page in range(1,totalPages):
+            parameters['pages'] = page
+            getDataForIndicator = req.get("https://api.worldbank.org/v2/country/{country}/indicator/{id}?date={startDate}:{endDate}&format=json&page={pages}".format_map(parameters))
+            #print(getDataForIndicator.status_code)
+            try:
+                getDataForIndicator=getDataForIndicator.json()[1]
+                temp_data = pd.DataFrame(getDataForIndicator)[['country', 'countryiso3code', 'date', 'value','unit','obs_status','decimal']]
+                
+            except:
+                indicatorList=indicatorList[indicator_idx+1:]
+                temp_data = pd.DataFrame()
+                data = pd.DataFrame()
+                print('pipe broke while at page',page)
+                break
+            else:
+                data=pd.concat([data, temp_data])
+                if page%5==0: print(page,' pages done')
+                
+        try:    #indName = indicators.loc[indicator,'Indicator Name']
+            data.rename(columns={'value':indicator},inplace=True)
+            data = pd.concat([data, data['country'].apply(pd.Series)], axis=1)
+            data.drop(columns=['country'], inplace=True)
+            data.rename(columns={'id':'country code','value':'country'}, inplace=True)
+        except:
+            indicatorList=indicatorList[indicator_idx+1:]
+            temp_data = pd.DataFrame()
+            data = pd.DataFrame()
+            print('pipe broke while at page',page)
+            continue
+        
+        if finalData.empty:
+            finalData = data
+            finalData.drop(columns=['unit','obs_status','decimal'],inplace=True)
+            print('Dataframe was empty')
+            data=pd.DataFrame()
+        else:
+            finalData = pd.merge(finalData,
+                            data[['countryiso3code','country code','country', 'date',indicator]],
+                            how='left', 
+                            on=['countryiso3code','country code','country','date',])
+            data=pd.DataFrame()
 except:
-    print('data write unsuccesful')
+    print('pipe broke at indicator ',indicator, ' while at page-',page)
+finally:
+    print(finalData.head(50))
+    print(finalData.columns, finalData.shape, finalData.describe())
+
+    try:
+        finalData.to_csv('IndicatorsData.csv')
+        print('indicator -', indicator)
+        print('data written succesfully')
+    except:
+        print('data write unsuccesful')
