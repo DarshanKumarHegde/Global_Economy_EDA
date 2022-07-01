@@ -77,8 +77,5 @@ def extract_data(parameters, indicator):
 
 indicatorList = get_indicators()
 
-extract_data(parameters,indicatorList[0])
-
-
-#for indicator in indicatorList:
-#    extract_data(parameters, indicator)
+for indicator in indicatorList:
+    extract_data(parameters, indicator)
