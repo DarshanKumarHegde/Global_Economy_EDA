@@ -58,7 +58,7 @@ try:
         totalPages=getTotalPages.json()[0]['pages']
         print(totalPages)
 
-        for page in range(1,totalPages):
+        for page in range(1,totalPages+1):
             parameters['pages'] = page
             getDataForIndicator = req.get("https://api.worldbank.org/v2/country/{country}/indicator/{id}?date={startDate}:{endDate}&format=json&page={pages}".format_map(parameters))
             #print(getDataForIndicator.status_code)
