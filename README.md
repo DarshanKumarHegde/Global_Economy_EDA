@@ -1,11 +1,9 @@
-# **Global_Economy_EDA**
+# **Economy Indicators EDA**
 
->EDA Project to understand key Global Economy Indicators, their relationships and impacts
+>EDA Project to understand key Global Economy Indicators, their relationships and impacts on a country's economy in general.
 
 ---
-
-
-## *Key Indicators chosen*
+## *Key Indicators extracted from the Database*
 |	Code |	License Type |	Indicator Name |
 |	:--: | :-----------: |	:------------: |
 |EG.USE.ELEC.KH.PC	|Use and distribution of these data are subject to IEA terms and conditions.|	Electric power consumption (kWh per capita)|
@@ -29,10 +27,32 @@
 |DT.TDS.DECT.EX.ZS	|CC BY-4.0|	Total debt service (% of exports of goods, services and primary income)|
 |SP.URB.GROW	|CC BY-4.0|	Urban population growth (annual %)|
 --- 
+*There are numerous other indicators on the WorldBank Database, but I have chosen only those that are probably useful for my current study*
 
+## Categorizing the above Indicators to use in my study
+1. Country descriptors
+    - Surface area (sq. km) : AG.SRF.TOTL.K2
+    - GDP (current US$) : NY.GDP.MKTP.CD
+    - GDP growth (annual %) : NY.GDP.MKTP.KD.ZG
+    - Urban Population growth (annual %) : SP.POP.GROW
+    - Population, total : SP.POP.TOTL
+    - Population density (people per sq. km of land area) : EN.POP.DNST
+
+2. Energy
+    - Electric power consumption (kWh per capita) : EG.USE.ELEC.KH.PC
+    - Energy use (kg of oil equivalent per capita) : EG.USE.PCAP.KG.OE
+
+3. Trade 
+    - Foreign direct investment, net inflows (BoP, current US$) : BX.KLT.DINV.CD.WD
+    - Imports of goods and services (% of GDP) : NE.IMP.GNFS.ZS
+    - Total debt service (% of exports of goods, services and primary income) : DT.TDS.DECT.EX.ZS
+    - Revenue, excluding grants (% of GDP) : GC.REV.XGRT.GD.ZS
+
+4. Other indicators
+    - Inflation, GDP deflator (annual %) : NY.GDP.DEFL.KD.ZG
+*Above 4 categories are used for the study. You may find few indicators that were collected are ignored, just so that there are fewer but relevent indicators*
 
 ## *Data Source and other required links*
 Database - [DataBank | The World Bank](https://data.worldbank.org/) 
-
 API documentation - [World Bank | Developer information](https://datahelpdesk.worldbank.org/knowledgebase/topics/125589)
 
