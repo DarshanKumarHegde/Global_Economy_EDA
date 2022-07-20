@@ -25,9 +25,9 @@
 |GC.TAX.TOTL.GD.ZS	|CC BY-4.0|	Tax revenue (% of GDP)|
 |DT.TDS.DECT.EX.ZS	|CC BY-4.0|	Total debt service (% of exports of goods, services and primary income)|
 |SP.URB.GROW	|CC BY-4.0|	Urban population growth (annual %)|
---- 
+---
 <br/>*There are numerous other indicators on the WorldBank Database, but I have chosen only those that are probably useful for my current study*
-
+ 
 ## Categorizing the above Indicators to use in my study
 1. Country descriptors
     - Surface area (sq. km) : AG.SRF.TOTL.K2
@@ -44,9 +44,9 @@
 
 4. Other indicators
     - Inflation, GDP deflator (annual %) : NY.GDP.DEFL.KD.ZG
-    
-<br/>*Above 4 categories are used for the study. You may find few indicators that were collected are ignored, just so that there are fewer but relevent indicators*
+
+<br/>*Above 3 categories are used for the study. You may find few indicators that were collected are ignored, just so that there are fewer but relevent indicators*
 
 ## *Data Source and other required links*
-- Database - [DataBank | The World Bank](https://data.worldbank.org/) 
-- API documentation - [World Bank | Developer information](https://datahelpdesk.worldbank.org/knowledgebase/topics/125589)
+Database - [DataBank | The World Bank](https://data.worldbank.org/) 
+<br/>API documentation - [World Bank | Developer information](https://datahelpdesk.worldbank.org/knowledgebase/topics/125589)
