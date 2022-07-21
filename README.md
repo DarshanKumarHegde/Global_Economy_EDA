@@ -50,3 +50,4 @@
 ## *Data Source and other required links*
 Database - [DataBank | The World Bank](https://data.worldbank.org/) 
 <br/>API documentation - [World Bank | Developer information](https://datahelpdesk.worldbank.org/knowledgebase/topics/125589)
+<br/>Terms of Use of Data and Licenses - [Terms and Licenses](https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets)
